@@ -14,8 +14,13 @@
 #include <vector>
 
 #include <dashel/dashel.h>
-#include "common/msg/msg.h"
-#include "common/msg/descriptions-manager.h"
+
+//#include <aseba/compiler/compiler.h>
+//#include <aseba/common/types.h>
+
+//Modified here
+#include <aseba/common/msg/msg.h>
+#include <aseba/common/msg/descriptions-manager.h>
 
 struct packet {
   int id;
