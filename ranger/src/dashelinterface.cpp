@@ -22,15 +22,15 @@ static std::wstring widen(const std::string& src) {
 DashelInterface::DashelInterface() :
 	isRunning(false), isConnected(false)
 {
-  commonDefinitions.events.push_back(NamedValue(widen("mainFeedback"), 15)); // acc (3) + prox (2) + battery (1) + bumber (1) + speed (2) + touchCompressed (3) + chargingState (1) + motorCurrent (2)
-  commonDefinitions.events.push_back(NamedValue(widen("mainFeedbackWithEncoders"), 19)); // acc (3) + prox (2) + battery (1) + bumber (1) + speed (2) + touchCompressed (3) + encoders (4) + chargingState (1) + motorCurrent (2)
+  commonDefinitions.events.push_back(NamedValue(widen("mainFeedback"), 16)); // acc (3) + prox (2) + battery (1) + bumper (1) + balance (1) + speed (2) + touchCompressed (3) + chargingState (1) + motorCurrent (2)
+  commonDefinitions.events.push_back(NamedValue(widen("mainFeedbackWithEncoders"), 20)); // acc (3) + prox (2) + battery (1) + bumper (1) + balance (1) +  speed (2) + touchCompressed (3) + encoders (4) + chargingState (1) + motorCurrent (2)
   commonDefinitions.events.push_back(NamedValue(widen("setLed"), 3));
   commonDefinitions.events.push_back(NamedValue(widen("receiverFeedback"), 10)); // source ID (1) + angle (1) + dist (1) + datas (7)
   commonDefinitions.events.push_back(NamedValue(widen("setSpeed"), 2));
   commonDefinitions.events.push_back(NamedValue(widen("enableEncoders"), 1));
   commonDefinitions.events.push_back(NamedValue(widen("playLedVid"), 2));
   commonDefinitions.events.push_back(NamedValue(widen("stopLedVid"), 0));
-  commonDefinitions.events.push_back(NamedValue(widen("neuilFeedback"), 5));  // prox (3) + lolette (1) + balance (1)
+  commonDefinitions.events.push_back(NamedValue(widen("neuilFeedback"), 4));  // prox (3) + lolette (1)
   commonDefinitions.events.push_back(NamedValue(widen("neuilEvent"), 8)); // Motors positions (8, one per motor)
   commonDefinitions.events.push_back(NamedValue(widen("customEvent"), 10));
   commonDefinitions.events.push_back(NamedValue(widen("emitterEvent"), 7));
@@ -140,21 +140,20 @@ void DashelInterface::incomingData(Dashel::Stream *stream) {
   // Event received
   const UserMessage *userMessage(dynamic_cast<UserMessage *>(message));
   if (userMessage) {
-    // get Neuil feedback ( prox(3) + lolette (1) + balance)
+    // get Neuil feedback ( prox(3) + lolette (1) )
     if(userMessage->type < commonDefinitions.events.size() && commonDefinitions.events[userMessage->type].name.c_str() == widen("neuilFeedback")) {
-      if(userMessage->data.size() >= 5) {
+      if(userMessage->data.size() >= 4) {
         mSharpValues[2]     = userMessage->data[0];
         mSharpValues[3]     = userMessage->data[1];
         mSharpValues[4]     = userMessage->data[2];
         mLolette            = userMessage->data[3];
-        mBalance            = userMessage->data[4];
       }
       else
-        fprintf(stderr, "Incomplete event 'neuilFeedback' received (only %d arguments instead of 5)\n", userMessage->data.size());
+        fprintf(stderr, "Incomplete event 'neuilFeedback' received (only %d arguments instead of 4)\n", userMessage->data.size());
     }
-    // get main feedback ( acc (3) + prox (2) + battery (1) + balance (2) + bumber (1) + speed (2) + touchCompressed (3) + chargingState (1) + motorCurrent (2))
+    // get main feedback ( acc (3) + prox (2) + battery (1) + balance (2) + bumper (1) + balance (1) + speed (2) + touchCompressed (3) + chargingState (1) + motorCurrent (2))
     else if(userMessage->type < commonDefinitions.events.size() && commonDefinitions.events[userMessage->type].name.c_str() == widen("mainFeedback")) {
-      if(userMessage->data.size() >= 15) {
+      if(userMessage->data.size() >= 16) {
         mAccelValues[0]     = userMessage->data[0];
         mAccelValues[1]     = userMessage->data[1];
         mAccelValues[2]     = userMessage->data[2];
@@ -162,19 +161,20 @@ void DashelInterface::incomingData(Dashel::Stream *stream) {
         mSharpValues[1]     = userMessage->data[4];
         mBattery            = userMessage->data[5];
         mBumper             = userMessage->data[6];
-        mSpeed[0]           = userMessage->data[7];
-        mSpeed[1]           = userMessage->data[8];
-        decompressTouch(userMessage->data[9], userMessage->data[10], userMessage->data[11]);
-        mChargingState      = userMessage->data[12];
-        mMotorsCurrent[0] = userMessage->data[13];
-        mMotorsCurrent[1] = userMessage->data[14];
+        mBalance            = userMessage->data[7];
+        mSpeed[0]           = userMessage->data[8];
+        mSpeed[1]           = userMessage->data[9];
+        decompressTouch(userMessage->data[10], userMessage->data[11], userMessage->data[12]);
+        mChargingState      = userMessage->data[13];
+        mMotorsCurrent[0]   = userMessage->data[14];
+        mMotorsCurrent[1]   = userMessage->data[15];
       }
       else
-        fprintf(stderr, "Incomplete event 'mainFeedback' received (only %d arguments instead of 15)\n", userMessage->data.size());
+        fprintf(stderr, "Incomplete event 'mainFeedback' received (only %d arguments instead of 16)\n", userMessage->data.size());
     }
-    // get main feedback with wheel encoder ( acc (3) + prox (2) + battery (1) + balance (2) + bumber (1) + speed (2) + touchCompressed (3) + encoderStates (4) + chargingState (1) + motorCurrent (2))
+    // get main feedback with wheel encoder ( acc (3) + prox (2) + battery (1) + balance (2) + bumper (1) + balance (1) +  speed (2) + touchCompressed (3) + encoderStates (4) + chargingState (1) + motorCurrent (2))
     else if(userMessage->type < commonDefinitions.events.size() && commonDefinitions.events[userMessage->type].name.c_str()== widen("mainFeedbackWithEncoders")) {
-      if(userMessage->data.size() >= 19) {
+      if(userMessage->data.size() >= 20) {
         mAccelValues[0]     = userMessage->data[0];
         mAccelValues[1]     = userMessage->data[1];
         mAccelValues[2]     = userMessage->data[2];
@@ -182,17 +182,18 @@ void DashelInterface::incomingData(Dashel::Stream *stream) {
         mSharpValues[1]     = userMessage->data[4];
         mBattery            = userMessage->data[5];
         mBumper             = userMessage->data[6];
-        mSpeed[0]           = userMessage->data[7];
-        mSpeed[1]           = userMessage->data[8];
-        decompressTouch(userMessage->data[9], userMessage->data[10], userMessage->data[11]);
+        mBalance            = userMessage->data[7];
+        mSpeed[0]           = userMessage->data[8];
+        mSpeed[1]           = userMessage->data[9];
+        decompressTouch(userMessage->data[10], userMessage->data[11], userMessage->data[12]);
         for(int c=0; c<4; c++) 
-          mEncoders[c]      = userMessage->data[c+12];
-        mChargingState      = userMessage->data[16];
-        mMotorsCurrent[0]   = userMessage->data[17];
-        mMotorsCurrent[1]   = userMessage->data[18];
+          mEncoders[c]      = userMessage->data[c+13];
+        mChargingState      = userMessage->data[17];
+        mMotorsCurrent[0]   = userMessage->data[18];
+        mMotorsCurrent[1]   = userMessage->data[19];
       }
       else
-        fprintf(stderr, "Incomplete event 'mainFeedbackWithEncoders' received (only %d arguments instead of 19)\n", userMessage->data.size());
+        fprintf(stderr, "Incomplete event 'mainFeedbackWithEncoders' received (only %d arguments instead of 20)\n", userMessage->data.size());
     }
     // get receiver id (1) + dist (1) + angle (1) + data (7)
     else if (userMessage->type < commonDefinitions.events.size() && commonDefinitions.events[userMessage->type].name.c_str() == widen("receiverFeedback")) {
