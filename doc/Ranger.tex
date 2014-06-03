@@ -131,11 +131,11 @@ In order to move the robot, the event \textit{setSpeed} has to be emitted with t
 \newpage
 \subsection{Feedback}
 
-The event \textit{enableFeedback} is used to enable feedback from the sensors (if argument is not equal to zero). Then every \textbf{XX}ms (event acc) the event \textit{mainFeedback} is emitted, this event take in arguments: the values (3) of the accelerometer, the value of the two ground distance sensors, the battery level, the state of the bumber, the speed of the two motors, the state of each of the touch sensors compressed into 3 integers, the charging state and finaly the curent in each motor (2).\\
+The event \textit{enableFeedback} is used to enable feedback from the sensors (if argument is not equal to zero). Then every \textbf{XX}ms (event acc) the event \textit{mainFeedback} is emitted, this event take in arguments: the values (3) of the accelerometer, the value of the two ground distance sensors, the battery level, the state of the bumber, the value of the balance, the speed of the two motors, the state of each of the touch sensors compressed into 3 integers, the charging state and finaly the curent in each motor (2).\\
 
 If the encoder from the wheels are needed, the event \textit{enableEncoders} has to be emitted with 1 has argument. Then instead of  \textit{mainFeedback}, the event  \textit{mainFeedbackWithEncoders} is emitted every \textbf{XX}m (event acc), this event has four additional arguments at the end representing the state of each of the two encoders.\\
 
-For now, since the bumper does not contain any sensors, the value of the bumper is simulated by reading the value of the current in the motor, if one of the current exceed a certain threshold, the bumper is set to 1. The value of this threshold can be tuned thanks to the constant \textit{CURRENT\_LIMIT}. % TODO : remove this when bumper is OK
+The bumper return 1 either if the pysical bumper return 1 or if one of the current used for the motor exceed a certain threshold. The value of this threshold can be tuned thanks to the constant \textit{CURRENT\_LIMIT}.
 
 \section{Neuil}
 
@@ -174,7 +174,7 @@ Finally the last four arguments are the percentage of openning of each eyelid, t
 
 Here again the event \textit{enableFeedback} is used in order to enable feedback from the sensors (if argument is not equal to zero).\\
 
-Then every 100ms (timer0, can be change) the event neuilFeedback is emitted with as arguments: the value from the three front distance sensors, the state of the lolette and the balance.\\
+Then every 100ms (timer0, can be change) the event neuilFeedback is emitted with as arguments: the value from the three front distance sensors and the state of the lolette.\\
 
 \section{Rab2}
 The event \textit{enableFeedback} is used to enable the receiver feedback if a non-zero arguments is used.\\
@@ -277,7 +277,7 @@ This utility allows you to chose the video, to specify if only the corner/face h
 
 Finally you can add this new file on the SD card of the robot.\\
 
-\section{Robot calibration}
+\section{Robot calibration (Outdated)}
 \subsection{Neuil servos calibration}
 In order to calibrate the servos of the eyes, go to the node \textit{neuil} of Aseba, first you have to update the array \textit{pos\_center} this array is used in order to define the center of the eye for the pupils. Therefore,  only the two first and two last components of this array are important (because the other are for the eyelid).\\
 
@@ -312,9 +312,9 @@ The function take as arguments a array of ten integers, which are the arguments 
    \textbf{event name} & \textbf{arguments} & \textbf{direction}\\
    \hline
    \hline
-   mainFeedback & 15 & computer \textcolor{red}{<-} robot \\
+   mainFeedback & 16 & computer \textcolor{red}{<-} robot \\
    \hline
-   mainFeedbackWithEncoders & 19 & computer \textcolor{red}{<-} robot \\
+   mainFeedbackWithEncoders & 20 & computer \textcolor{red}{<-} robot \\
    \hline
    setLed & 3 & computer \textcolor{green}{->} robot \\
    \hline
@@ -328,7 +328,7 @@ The function take as arguments a array of ten integers, which are the arguments 
    \hline
    stopLedVid & 0 & computer \textcolor{green}{->} robot \\
    \hline
-   neuilFeedback & 5 & computer \textcolor{red}{<-} robot \\
+   neuilFeedback & 4 & computer \textcolor{red}{<-} robot \\
    \hline
    neuilEvent & 8 & computer \textcolor{green}{->} robot \\
    \hline
