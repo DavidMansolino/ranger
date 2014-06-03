@@ -64,7 +64,7 @@ end
 
 # Bumper computed either via the physical bumper or with the motor current
 sub computeBumper
-if bumper == 1 or mot1.pid.target_current > CURRENT_LIMIT or mot1.pid.target_current &lt; -CURRENT_LIMIT or mot2.pid.target_current > CURRENT_LIMIT or mot2.pid.target_current &lt; -CURRENT_LIMIT then
+if bumper == 1 or mot1.pid.target_current > CURRENT_LIMIT or mot1.pid.target_current < -CURRENT_LIMIT or mot2.pid.target_current > CURRENT_LIMIT or mot2.pid.target_current < -CURRENT_LIMIT then
 	Bumper = 1
 else
 	Bumper = 0
@@ -206,7 +206,7 @@ if initNeuil == 1 then
 
 	R+=dR
 	a+=da
-	if a &lt; 0 then
+	if a < 0 then
 		a = 360
 	else
 		a%=360
