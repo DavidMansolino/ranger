@@ -6,9 +6,9 @@
 
 
 <!--list of constants-->
-<constant value="20" name="BEACON_ID"/>
 <constant value="7" name="ROBOT_1_ID"/>
 <constant value="8" name="ROBOT_2_ID"/>
+<constant value="9" name="ROBOT_3_ID"/>
 
 
 <!--show keywords state-->
@@ -16,7 +16,7 @@
 
 
 <!--node rab2-->
-<node nodeId="7" name="rab2">rf.id = BEACON_ID
+<node nodeId="7" name="rab2">
 rf.swarm_size = 25
 rf.slot_time = 4000
 rx.power.en = 1
@@ -29,7 +29,7 @@ if rx.source == ROBOT_1_ID then
 	rf.tx_data[1] = rx.dist
 end
 
-# for two robots, can be expand like this:
+# David: for two robots, can be expand like this for example
 #onevent packet.rx
 #if rx.source == ROBOT_1_ID then
 #	rf.tx_data[0] = ROBOT_1_ID

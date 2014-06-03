@@ -6,7 +6,6 @@
 
 
 <!--list of constants-->
-<constant value="4" name="STATION_ID"/>
 <constant value="7" name="ROBOT_ID"/>
 
 
@@ -15,7 +14,7 @@
 
 
 <!--node rab2-->
-<node nodeId="7" name="rab2">rf.id = STATION_ID
+<node nodeId="7" name="rab2">
 rf.swarm_size = 25
 rf.slot_time = 4000
 rx.power.en = 1
