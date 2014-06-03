@@ -61,11 +61,11 @@ int webots::DifferentialWheels::step(int ms) {
   // -------- Sensors -------- //
   // DistanceSensor
   const int * sharpValues = dashelInterface->getSharpValues();
-  ((DistanceSensor *)mDevices["dsBottomLeft"])->setValue(sharpValues[0]);
-  ((DistanceSensor *)mDevices["dsBottomRight"])->setValue(sharpValues[1]);
-  ((DistanceSensor *)mDevices["dsFrontLeft"])->setValue(sharpValues[2]);
-  ((DistanceSensor *)mDevices["dsFrontRight"])->setValue(sharpValues[3]);
-  ((DistanceSensor *)mDevices["dsFrontCenter"])->setValue(sharpValues[4]);
+  ((DistanceSensor *)mDevices["dsBottomLeft"])->setValue(sharpValues[1]);
+  ((DistanceSensor *)mDevices["dsBottomRight"])->setValue(sharpValues[0]);
+  ((DistanceSensor *)mDevices["dsFrontLeft"])->setValue(sharpValues[4]); 
+  ((DistanceSensor *)mDevices["dsFrontRight"])->setValue(sharpValues[2]);
+  ((DistanceSensor *)mDevices["dsFrontCenter"])->setValue(sharpValues[3]);
   // Accelerometer
   ((Accelerometer *)mDevices["accelerometer"])->setValues(dashelInterface->getAccelerometerValues()[0], dashelInterface->getAccelerometerValues()[1], dashelInterface->getAccelerometerValues()[2]);
   // TouchSensor
@@ -233,7 +233,7 @@ double webots::DifferentialWheels::batterySensorGetValue() {
 }
 
 void webots::DifferentialWheels::connectToDashel() {
-  dashelInterface->connectAseba("tcp:127.0.0.1;33333");
+  dashelInterface->connectAseba("tcp:10.0.0.192;33333");
 }
 
 void webots::DifferentialWheels::setSpeed(double left, double right) {
