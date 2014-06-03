@@ -14,8 +14,8 @@
 #include <vector>
 
 #include <dashel/dashel.h>
-#include "../common/msg/msg.h"
-#include "../common/msg/descriptions-manager.h"
+#include "common/msg/msg.h"
+#include "common/msg/descriptions-manager.h"
 
 struct packet {
   int id;

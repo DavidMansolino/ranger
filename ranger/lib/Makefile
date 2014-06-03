@@ -11,25 +11,26 @@
 
 # pathes
 DASHEL_INCLUDE = /home/david/aseba/dashel
+ASEBA_INCLUDE = /home/david/aseba/aseba
 
 # -------------------------------------------------------------
 
 TARGET = rangerWrapper.a
 
 CXX_SOURCES = \
-  ./dashelinterface.cpp \
-  ./Accelerometer.cpp \
-  ./DifferentialWheels.cpp \
-  ./DistanceSensor.cpp \
-  ./LED.cpp \
-  ./Packet.cpp \
-  ./Receiver.cpp \
-  ./Emitter.cpp \
-  ./Motor.cpp \
-  ./TouchSensor.cpp
+  ../src/dashelinterface.cpp \
+  ../src/Accelerometer.cpp \
+  ../src/DifferentialWheels.cpp \
+  ../src/DistanceSensor.cpp \
+  ../src/LED.cpp \
+  ../src/Packet.cpp \
+  ../src/Receiver.cpp \
+  ../src/Emitter.cpp \
+  ../src/Motor.cpp \
+  ../src/TouchSensor.cpp
 
 OBJECTS = $(CXX_SOURCES:.cpp=.o)
-INCLUDE_DIRS = -I$(DASHEL_INCLUDE) -I../include
+INCLUDE_DIRS = -I$(ASEBA_INCLUDE) -I$(DASHEL_INCLUDE) -I../include
 
 AR = ar
 ARFLAGS = rv
