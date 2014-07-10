@@ -233,7 +233,7 @@ double webots::DifferentialWheels::batterySensorGetValue() {
 }
 
 void webots::DifferentialWheels::connectToDashel() {
-  dashelInterface->connectAseba("tcp:10.0.0.192;33333");
+  dashelInterface->connectAseba("tcp:localhost;33333");
 }
 
 void webots::DifferentialWheels::setSpeed(double left, double right) {
