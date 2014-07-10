@@ -9,7 +9,7 @@
 CC = g++
 
 # define any compile-time flags
-CFLAGS = -msse3 -Wall -O2 -DNDEBUG -fPIC -fvisibility=hidden -Werror
+CFLAGS = -Wall -O2 -DNDEBUG -fPIC -fvisibility=hidden
 
 # define any directories containing header files other than /usr/include
 #
