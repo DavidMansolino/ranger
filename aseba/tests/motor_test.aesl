@@ -1,0 +1,51 @@
+<!DOCTYPE aesl-source>
+<network>
+
+
+<!--list of global events-->
+<event size="2" name="motor"/>
+<event size="1" name="setSpeed"/>
+
+
+<!--list of constants-->
+<constant value="35" name="KP"/>
+<constant value="5" name="KI"/>
+<constant value="1000" name="LIMIT"/>
+
+
+<!--show keywords state-->
+<keywords flag="true"/>
+
+
+<!--node RangerMain-->
+<node nodeId="1" name="RangerMain">#mot1.pid.enable =0
+#mot2.pid.enable =0
+
+#mot1.pid._kp_s = KP
+#mot1.pid._ki_s = KI
+#mot2.pid._kp_s = KP
+#mot2.pid._ki_s = KI
+
+#mot1.pid.current_max = LIMIT
+#mot2.pid.current_max = LIMIT
+#mot1.pid._scaler_i 
+
+onevent setSpeed
+mot1.pid.enable =2
+mot2.pid.enable =2
+mot1.pid.target_speed =  event.args[0]
+mot2.pid.target_speed = -event.args[0]
+
+onevent acc
+emit motor[mot1.speed, mot1._raw_current]</node>
+
+
+<!--node rab2-->
+<node nodeId="7" name="rab2"></node>
+
+
+<!--node neuil-->
+<node nodeId="15" name="neuil"></node>
+
+
+</network>
