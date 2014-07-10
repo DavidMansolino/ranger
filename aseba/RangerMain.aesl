@@ -25,8 +25,35 @@
 <!--show keywords state-->
 <keywords flag="true"/>
 
+
+<!--node rab2-->
+<node nodeId="7" name="rab2">var rabFeedbackEnable = 0
+var c
+rf.swarm_size = 25
+rf.slot_time = 4000
+rx.power.en = 1
+tx.power.en = 1
+call rf.start()
+
+
+onevent packet.rx
+if rabFeedbackEnable != 0 then
+	emit receiverFeedback[rx.source, rx.angle, rx.dist, rx.data]
+end
+
+
+onevent emitterEvent
+for c in 0:6 do
+	rf.tx_data[c] = event.args[c]
+end
+
+onevent enableFeedback
+rabFeedbackEnable = event.args[0]
+</node>
+
+
 <!--node RangerMain-->
-<node name="RangerMain">var touchBuffer[2]
+<node nodeId="1" name="RangerMain">var touchBuffer[2]
 var i
 var j
 var timer = 0
@@ -39,8 +66,13 @@ var TouchRear
 var Bumper = 0
 var mainFeedbackEnable = 0
 
-mot1.pid.current_max = 3500
-mot2.pid.current_max = 3500
+mot1.pid.current_max = 700
+mot2.pid.current_max = 700
+
+mot1.pid._kp_s = 35
+mot1.pid._ki_s = 5
+mot2.pid._kp_s = 35
+mot2.pid._ki_s = 5
 
 # switch off all leds
 for i in 0:185 do
@@ -86,6 +118,11 @@ end
 
 #event acc used to send data
 onevent acc
+if vbat &lt; 6500 then
+	for i in 0:5 do
+		call led.set(i, 255, 0, 0)
+	end
+end
 if mainFeedbackEnable != 0 then
 	callsub touchCompress
 	callsub computeBumper
@@ -141,34 +178,10 @@ mainFeedbackEnable = event.args[0]
 
 
 </node>
-<!--node rab2-->
-<node name="rab2">var rabFeedbackEnable = 0
-var c
-rf.swarm_size = 25
-rf.slot_time = 4000
-rx.power.en = 1
-tx.power.en = 1
-call rf.start()
-
-
-onevent packet.rx
-if rabFeedbackEnable != 0 then
-	emit receiverFeedback[rx.source, rx.angle, rx.dist, rx.data]
-end
-
-
-onevent emitterEvent
-for c in 0:6 do
-	rf.tx_data[c] = event.args[c]
-end
-
-onevent enableFeedback
-rabFeedbackEnable = event.args[0]
-</node>
 
 
 <!--node neuil-->
-<node name="neuil">var mainFeedbackEnable = 0
+<node nodeId="15" name="neuil">var mainFeedbackEnable = 0
 
 # Just for Neuil init in order to move the pupils slowly; the magnets can be "englued" and lossed
 var initNeuil = 1
@@ -232,5 +245,6 @@ for i in 0:3 do
 	call eyelid.set(i, event.args[i+3])
 end
 </node>
+
 
 </network>
