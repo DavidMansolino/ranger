@@ -1,0 +1,12 @@
+TODO
+
+In Makefile for ranger_libs correct paths
+
+Kinect
+Ranger model
+Webots kinect library integer
+
+WbDeviceTag conflict with other library??
+
+Maybe include webots device tag using device.hpp from ranger_lib
+
