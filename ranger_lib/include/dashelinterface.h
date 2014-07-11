@@ -19,8 +19,8 @@
 //#include <aseba/common/types.h>
 
 //Modified here
-#include <aseba/common/msg/msg.h>
-#include <aseba/common/msg/descriptions-manager.h>
+#include "common/msg/msg.h"
+#include "common/msg/descriptions-manager.h"
 
 struct packet {
   int id;
