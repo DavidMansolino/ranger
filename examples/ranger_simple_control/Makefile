@@ -8,20 +8,20 @@
 ###############################################################
 
 # -------------------------------------------------------------
-# TO MODIFY:
+
 
 # name of the binary to generate
 TARGET = controller
 
 # Depedency libraries
-DASHEL_LIB = /home/david/aseba/build-dashel/libdashel.a
-ASEBA_LIB = /home/david/aseba/build-aseba/common/libasebacommon.a
-ASEBA_COMPILER_LIB = /home/david/aseba/build-aseba/compiler/libasebacompiler.a
-ASEBA_DASHEL_PLUGIN_LIB = /home/david/aseba/build-aseba/transport/dashel_plugins/libasebadashelplugins.a
+DASHEL_LIB = $(ASEBA_BASE)/build-dashel/libdashel.so
+ASEBA_LIB =  $(ASEBA_BASE)/build-aseba/common/libasebacommon.a
+ASEBA_COMPILER_LIB =  $(ASEBA_BASE)/build-aseba/compiler/libasebacompiler.a
+ASEBA_DASHEL_PLUGIN_LIB =  $(ASEBA_BASE)/build-aseba/transport/dashel_plugins/libasebadashelplugins.a
 
 # pathes
-WEBOTS_RANGER_LIB = /home/david/ranger/ranger/lib/rangerWrapper.a
-WEBOTS_RANGER_INCLUDE = /home/david/ranger/ranger/include
+WEBOTS_RANGER_LIB = $(RANGER_BASICS_BASE)/ranger_lib/lib/rangerWrapper.a
+WEBOTS_RANGER_INCLUDE = $(RANGER_BASICS_BASE)/ranger_lib/include
 
 # source filenames
 CXX_SOURCES = \
