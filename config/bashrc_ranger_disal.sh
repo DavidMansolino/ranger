@@ -1,5 +1,15 @@
-export OPENNI2_PATH=/home/navarro/repos/OpenNI2
-export OPENNI2_LIB_PATH=/home/navarro/repos/OpenNI2/Bin/x64-Release
+#!/bin/bash
+
+#OPENNI2 - Disal Makefiles
+export OPENNI2_PATH=/root/disal/utils/OpenNI2
+export OPENNI2_LIB_PATH=/root/disal/utils/OpenNI2/Bin/Arm-Release
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$OPENNI2_LIB_PATH
 alias sudo='sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$OPENNI2_LIB_PATH'
+
+#ASEBA
+export ASEBA_BASE=/root/disal/utils/aseba
+export RANGER_BASICS_BASE=/root/disal/ranger-basics
+
+#Update robot time
+ntpdate ntp.ubuntu.com
 
