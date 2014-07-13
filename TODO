@@ -10,3 +10,17 @@ WbDeviceTag conflict with other library??
 
 Maybe include webots device tag using device.hpp from ranger_lib
 
+Change sensor model proximity in webots
+
+Ask david why TIME STEP can be 25
+
+
+Kinect obst avoidance:
+1. Test last year controller.
+Check speed, kinect, etc...
+2. Modify world for new proto.
+Check kinect proto for short range and which values it get.
+3. reimplement the controller Implement
+
+New repo for research
+----------------------
