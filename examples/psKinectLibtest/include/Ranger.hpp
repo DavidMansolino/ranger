@@ -6,34 +6,22 @@
 #ifndef RANGERCPP_HPP
 #define RANGERCPP_HPP
 
-#include "webots/DifferentialWheels.hpp"
 
 #define TIME_STEP          25
 #define NMOTORS             8
 #define NDISTANCESENSORS    5
 
-namespace webots {
-  class Motor;
-  class TouchSensor;
-  class DistanceSensor;
-  class Receiver;
+namespace ranger {
+ 
   
-  
-  class Ranger : public DifferentialWheels {
+  class Ranger {
     public:
                                        Ranger();
       virtual                         ~Ranger();
 
       void                             run();
-      
-    private:
-      void                             myStep();
-      
-      Motor                           *mMotors[NMOTORS];
-      DistanceSensor                  *mDistanceSensors[NDISTANCESENSORS];
-      TouchSensor                     *mBumper;
-      TouchSensor                     *mBalance;
-      Receiver                        *mReceiver;
+
+
   };
 };
 

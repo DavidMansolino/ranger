@@ -2,7 +2,7 @@
 
 #include <stdio.h>
 
-using namespace webots;
+using namespace ranger;
 
 int main(int argc, char *argv[])
 {
