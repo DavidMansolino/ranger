@@ -2,7 +2,7 @@
 #define KINECT_HPP
 
 typedef unsigned short WbDeviceTag; /* identifier of a device */
-#include <stdbool.h>
+// #include <stdbool.h>
 
 WbDeviceTag          wb_kinect_get(const char *name);
 void                 wb_kinect_enable(WbDeviceTag tag, int colorMS, int rangeMS, bool advancedModel);
@@ -12,7 +12,7 @@ int                  wb_kinect_get_range_sampling_period(WbDeviceTag tag);
 
 const unsigned char *wb_kinect_get_image(WbDeviceTag tag);
 const float         *wb_kinect_get_range_image(WbDeviceTag tag);
-const int           *wb_kinect_get_range_image_mm(WbDeviceTag tag) {
+const short unsigned int *wb_kinect_get_range_image_mm(WbDeviceTag tag);
 
 int                  wb_kinect_get_color_width(WbDeviceTag tag);
 int                  wb_kinect_get_range_width(WbDeviceTag tag);

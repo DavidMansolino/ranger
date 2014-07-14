@@ -19,12 +19,13 @@ using namespace openni;
 static Status rc;
 static Device device;
 static VideoFrameRef frame;
+static VideoStream depth;
 
 
-static bool kinect_enable = false;
+static bool kinectenable = false;
 static bool isInit = false;
-static height_pixels = 0;
-static width_pixels = 0;
+static int height_pixels = 0;
+static int width_pixels = 0;
 
 float rangeImage [480*640];
 
@@ -32,7 +33,7 @@ float rangeImage [480*640];
 /*************       initialization      *************/
 
 void kinect_init() {
-  kinect.enable = false;
+  kinectenable = false;
   isInit = true;
 }
 
@@ -81,7 +82,7 @@ void wb_kinect_enable(WbDeviceTag tag, int colorMS, int rangeMS, bool advancedMo
   }
 
   // Do one read to update the withd and height.
-  wb_kinect_get_range_image_mm(tag)
+  wb_kinect_get_range_image_mm(tag);
   kinectenable = true;
 }
 
@@ -110,7 +111,7 @@ const float *wb_kinect_get_range_image(WbDeviceTag tag) {
   return NULL;
 }
 
-const int *wb_kinect_get_range_image_mm(WbDeviceTag tag) {
+const short unsigned int *wb_kinect_get_range_image_mm(WbDeviceTag tag) {
   if(kinectenable) {
     int changedStreamDummy;
     VideoStream* pStream = &depth;
@@ -118,24 +119,26 @@ const int *wb_kinect_get_range_image_mm(WbDeviceTag tag) {
     if (rc != STATUS_OK)
     {
       printf("Wait failed! (timeout is %d ms)\n%s\n", SAMPLE_READ_WAIT_TIMEOUT, OpenNI::getExtendedError());
-      continue;
+      return NULL;
+
     }
 
     rc = depth.readFrame(&frame);
     if (rc != STATUS_OK)
     {
       printf("Read failed!\n%s\n", OpenNI::getExtendedError());
-      continue;
+      return NULL;
+
     }
 
     if (frame.getVideoMode().getPixelFormat() != PIXEL_FORMAT_DEPTH_1_MM && frame.getVideoMode().getPixelFormat() != PIXEL_FORMAT_DEPTH_100_UM)
     {
       printf("Unexpected frame format\n");
-      continue;
+      return NULL;
     }
 
     DepthPixel* pDepth = (DepthPixel*)frame.getData();
-    height_pixels = frame.getHeight()
+    height_pixels = frame.getHeight();
     width_pixels = frame.getWidth();
     return pDepth;
   }
@@ -146,16 +149,16 @@ const int *wb_kinect_get_range_image_mm(WbDeviceTag tag) {
 
 
 int wb_kinect_get_range_width(WbDeviceTag tag) {
-  if(kinect.enable)
-    return width_pixels
+  if(kinectenable)
+    return width_pixels;
   // kinect not enable
   fprintf(stderr, "Please enable the kinect before to use wb_kinect_get_range_width()\n");
   return 0;
 }
 
 int wb_kinect_get_range_height(WbDeviceTag tag) {
-  if(kinect.enable)
-    return height_pixels
+  if(kinectenable)
+    return height_pixels;
   // // kinect not enable
   fprintf(stderr, "Please enable the kinect before to use wb_kinect_get_range_height()\n");
   return 0;

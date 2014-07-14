@@ -19,13 +19,13 @@ TARGET = kinect.a
 CXX_SOURCES = \
   ../src/kinect.c \
 
-OBJECTS = $(CXX_SOURCES:.cpp=.o)
-INCLUDE_DIRS =-I../include
+OBJECTS = $(CXX_SOURCES:.c=.o)
+INCLUDE_DIRS =-I../include -I$(OPENNI2_PATH)/Include  -I$(OPENNI2_PATH)/Samples/Common
 
 AR = ar
 ARFLAGS = rv
-CXX = g++
-CXXFLAGS += -c -O2 -DLINUX -Wall $(INCLUDE_DIRS)
+CC = g++
+CFLAGS += -c -O2 -DLINUX -Wall -fPIC -fvisibility=hidden $(INCLUDE_DIRS)
 
 all: $(TARGET)
 
