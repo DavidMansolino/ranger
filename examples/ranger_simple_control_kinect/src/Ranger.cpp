@@ -85,8 +85,8 @@ void Ranger::run() {
   while(1) {
     double DSValue = mDistanceSensors[3]->getValue();
 
-    const int *rangeImage_mm = wb_kinect_get_range_image_mm(kinect);
-    int centerpix = (wb_kinect_get_range_height(kinect)+1)/2*wb_kinect_get_range_width(kinect); // (frame.getHeight()+1)*frame.getWidth()/2;
+    const short unsigned int *rangeImage_mm = wb_kinect_get_range_image_mm(kinect);
+    int centerpix = (wb_kinect_get_range_height(kinect)+1)*wb_kinect_get_range_width(kinect)/2; // (frame.getHeight()+1)*frame.getWidth()/2;
     int distance = rangeImage_mm[centerpix];
     printf("Distance: %d DS value %f\n", distance, DSValue);
 
