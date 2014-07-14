@@ -12,14 +12,14 @@
 
 #include "OniSampleUtilities.h"
 
-#define SAMPLE_READ_WAIT_TIMEOUT 200 //2000ms
+#define SAMPLE_READ_WAIT_TIMEOUT 2000 //2000ms
 
 using namespace openni;
 
-static Status rc;
-static Device device;
-static VideoFrameRef frame;
-static VideoStream depth;
+Status rc;
+Device device;
+VideoFrameRef frame;
+VideoStream depth;
 
 
 static bool kinectenable = false;
@@ -56,7 +56,6 @@ void wb_kinect_enable(WbDeviceTag tag, int colorMS, int rangeMS, bool advancedMo
     return;
   }
 
-  Device device;
   rc = device.open(ANY_DEVICE);
   if (rc != STATUS_OK)
   {
@@ -82,8 +81,8 @@ void wb_kinect_enable(WbDeviceTag tag, int colorMS, int rangeMS, bool advancedMo
   }
 
   // Do one read to update the withd and height.
-  wb_kinect_get_range_image_mm(tag);
   kinectenable = true;
+  wb_kinect_get_range_image_mm(tag);
 }
 
 void wb_kinect_disable(WbDeviceTag tag) {
@@ -107,7 +106,7 @@ const float *wb_kinect_get_range_image(WbDeviceTag tag) {
   }
 
   // // kinect not enable
-  fprintf(stderr, "Please enable the kinect before to use wb_kinect_get_range_image()\n");
+  fprintf(stderr, "1.Please enable the kinect before to use wb_kinect_get_range_image()\n");
   return NULL;
 }
 
@@ -115,7 +114,9 @@ const short unsigned int *wb_kinect_get_range_image_mm(WbDeviceTag tag) {
   if(kinectenable) {
     int changedStreamDummy;
     VideoStream* pStream = &depth;
+
     rc = OpenNI::waitForAnyStream(&pStream, 1, &changedStreamDummy, SAMPLE_READ_WAIT_TIMEOUT);
+
     if (rc != STATUS_OK)
     {
       printf("Wait failed! (timeout is %d ms)\n%s\n", SAMPLE_READ_WAIT_TIMEOUT, OpenNI::getExtendedError());
@@ -124,6 +125,7 @@ const short unsigned int *wb_kinect_get_range_image_mm(WbDeviceTag tag) {
     }
 
     rc = depth.readFrame(&frame);
+
     if (rc != STATUS_OK)
     {
       printf("Read failed!\n%s\n", OpenNI::getExtendedError());
@@ -143,7 +145,7 @@ const short unsigned int *wb_kinect_get_range_image_mm(WbDeviceTag tag) {
     return pDepth;
   }
   // kinect not enable
-  fprintf(stderr, "Please enable the kinect before to use wb_kinect_get_range_image()\n");
+  fprintf(stderr, "2.Please enable the kinect before to use wb_kinect_get_range_image()\n");
   return NULL;
 }
 
@@ -152,7 +154,7 @@ int wb_kinect_get_range_width(WbDeviceTag tag) {
   if(kinectenable)
     return width_pixels;
   // kinect not enable
-  fprintf(stderr, "Please enable the kinect before to use wb_kinect_get_range_width()\n");
+  fprintf(stderr, "3.Please enable the kinect before to use wb_kinect_get_range_width()\n");
   return 0;
 }
 
@@ -160,7 +162,7 @@ int wb_kinect_get_range_height(WbDeviceTag tag) {
   if(kinectenable)
     return height_pixels;
   // // kinect not enable
-  fprintf(stderr, "Please enable the kinect before to use wb_kinect_get_range_height()\n");
+  fprintf(stderr, "4Please enable the kinect before to use wb_kinect_get_range_height()\n");
   return 0;
 }
 
