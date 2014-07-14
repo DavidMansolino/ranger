@@ -1,6 +1,8 @@
 #ifndef KINECT_HPP
 #define KINECT_HPP
 
+typedef unsigned short WbDeviceTag; /* identifier of a device */
+#include <stdbool.h>
 
 WbDeviceTag          wb_kinect_get(const char *name);
 void                 wb_kinect_enable(WbDeviceTag tag, int colorMS, int rangeMS, bool advancedModel);
