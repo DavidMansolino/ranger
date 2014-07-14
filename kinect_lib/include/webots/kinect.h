@@ -10,6 +10,7 @@ int                  wb_kinect_get_range_sampling_period(WbDeviceTag tag);
 
 const unsigned char *wb_kinect_get_image(WbDeviceTag tag);
 const float         *wb_kinect_get_range_image(WbDeviceTag tag);
+const int           *wb_kinect_get_range_image_mm(WbDeviceTag tag) {
 
 int                  wb_kinect_get_color_width(WbDeviceTag tag);
 int                  wb_kinect_get_range_width(WbDeviceTag tag);

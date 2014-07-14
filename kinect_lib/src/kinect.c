@@ -102,6 +102,23 @@ const float *wb_kinect_get_range_image(WbDeviceTag tag) {
   // return NULL;
 }
 
+const int *wb_kinect_get_range_image_mm(WbDeviceTag tag) {
+  // int i;
+  // if(kinectArray[tag].enable) {
+  //   const float * rangeImage = wb_kinect_get_range_image(tag);
+  //   int pixelNumber = wb_kinect_get_range_width(tag)*wb_kinect_get_range_height(tag);
+  //   for(i=0;i<pixelNumber;i++){
+  //     kinectArray[tag].rangeImageMm[i] = (int) 1000*rangeImage[i];  
+  //   }
+  //   return kinectArray[tag].rangeImageMm;
+  // }
+
+  // // kinect not enable
+  // fprintf(stderr, "Please enable the kinect before to use wb_kinect_get_range_image()\n");
+  return NULL;
+}
+
+
 int wb_kinect_get_range_width(WbDeviceTag tag) {
   if(kinect.enable)
   //   return wb_camera_get_width(kinectArray[tag].rangeCamera);
