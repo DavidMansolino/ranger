@@ -10,8 +10,8 @@
 # -------------------------------------------------------------
 
 # pathes
-DASHEL_INCLUDE = /root/disal/utils/aseba/dashel
-ASEBA_INCLUDE = /root/disal/utils/aseba/aseba
+DASHEL_INCLUDE = $(ASEBA_BASE)/dashel
+ASEBA_INCLUDE = $(ASEBA_BASE)/aseba
 
 # -------------------------------------------------------------
 
