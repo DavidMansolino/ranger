@@ -16,6 +16,7 @@
 <event size="10" name="customEvent"/>
 <event size="7" name="emitterEvent"/>
 <event size="1" name="enableFeedback"/>
+<event size="2" name="setEncoders"/>
 
 
 <!--list of constants-->
@@ -136,6 +137,8 @@ end
 #	call led.vid.stop()
 #end
 
+onevent setEncoders
+# TODO: don't know the function by heart
 
 onevent setSpeed
 if event.args[0] == 0 and event.args[1] == 0 then

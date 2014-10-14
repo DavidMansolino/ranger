@@ -43,6 +43,7 @@ namespace webots {
             void                 batterySensorEnable(int ms);
             void                 batterySensorDisable();
             double               batterySensorGetValue();
+            void                 setEncoders(double left, double right);
             double               getMaxSpeed() const;
             double               getSpeedUnit() const;
             
