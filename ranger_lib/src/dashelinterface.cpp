@@ -35,6 +35,7 @@ DashelInterface::DashelInterface() :
   commonDefinitions.events.push_back(NamedValue(widen("customEvent"), 10));
   commonDefinitions.events.push_back(NamedValue(widen("emitterEvent"), 7));
   commonDefinitions.events.push_back(NamedValue(widen("enableFeedback"), 1));
+  commonDefinitions.events.push_back(NamedValue(widen("setEncoders"), 2));
 }
 
 DashelInterface::~DashelInterface() {

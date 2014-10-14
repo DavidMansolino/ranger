@@ -253,6 +253,14 @@ void webots::DifferentialWheels::setSpeed(double left, double right) {
   }
 }
 
+void setEncoders(double left, double right) {
+  if((left < 32768) && (left > -32767) && (right < 32768) && (right > -32767)) {
+    const int args[2] = {(int)right, (int)left};
+    dashelInterface->sendEvent("setEncoders", args, 2);
+  } else
+    fprintf(stderr, "Warning: arguments of 'setEncoders' should be between -32767 and +32768\n");
+}
+
 void webots::DifferentialWheels::initRanger() {
   connectToDashel();
 }
