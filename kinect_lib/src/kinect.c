@@ -106,12 +106,13 @@ const float *wb_kinect_get_range_image(WbDeviceTag tag) {
   }
 
   // // kinect not enable
-  fprintf(stderr, "1.Please enable the kinect before to use wb_kinect_get_range_image()\n");
+  fprintf(stderr, "1.Please enable the kinect before to use wb_kinect_get_range_image() - TO IMPLEMENT\n");
   return NULL;
 }
 
 const short unsigned int *wb_kinect_get_range_image_mm(WbDeviceTag tag) {
   if(kinectenable) {
+    int i;
     int changedStreamDummy;
     VideoStream* pStream = &depth;
 
@@ -142,12 +143,61 @@ const short unsigned int *wb_kinect_get_range_image_mm(WbDeviceTag tag) {
     DepthPixel* pDepth = (DepthPixel*)frame.getData();
     height_pixels = frame.getHeight();
     width_pixels = frame.getWidth();
+
+    //Fix blind column
+    for(i=0;i<height_pixels;i++){
+         pDepth[i*width_pixels + 0] = pDepth[i*width_pixels + 3]; 
+         pDepth[i*width_pixels + 1] = pDepth[i*width_pixels + 3];  
+         pDepth[i*width_pixels + 2] = pDepth[i*width_pixels + 3];  
+    }
+
     return pDepth;
   }
   // kinect not enable
   fprintf(stderr, "2.Please enable the kinect before to use wb_kinect_get_range_image()\n");
   return NULL;
 }
+
+
+// const short unsigned int *wb_kinect_get_range_image_mm(WbDeviceTag tag) {
+//   if(kinectenable) {
+//     int changedStreamDummy;
+//     VideoStream* pStream = &depth;
+
+//     rc = OpenNI::waitForAnyStream(&pStream, 1, &changedStreamDummy, SAMPLE_READ_WAIT_TIMEOUT);
+
+//     if (rc != STATUS_OK)
+//     {
+//       printf("Wait failed! (timeout is %d ms)\n%s\n", SAMPLE_READ_WAIT_TIMEOUT, OpenNI::getExtendedError());
+//       return NULL;
+
+//     }
+
+//     rc = depth.readFrame(&frame);
+
+//     if (rc != STATUS_OK)
+//     {
+//       printf("Read failed!\n%s\n", OpenNI::getExtendedError());
+//       return NULL;
+
+//     }
+
+//     if (frame.getVideoMode().getPixelFormat() != PIXEL_FORMAT_DEPTH_1_MM && frame.getVideoMode().getPixelFormat() != PIXEL_FORMAT_DEPTH_100_UM)
+//     {
+//       printf("Unexpected frame format\n");
+//       return NULL;
+//     }
+
+//     DepthPixel* pDepth = (DepthPixel*)frame.getData();
+//     height_pixels = frame.getHeight();
+//     width_pixels = frame.getWidth();
+//     return pDepth;
+//   }
+//   // kinect not enable
+//   fprintf(stderr, "2.Please enable the kinect before to use wb_kinect_get_range_image()\n");
+//   return NULL;
+// }
+
 
 
 int wb_kinect_get_range_width(WbDeviceTag tag) {
