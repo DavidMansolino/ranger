@@ -144,11 +144,17 @@ const short unsigned int *wb_kinect_get_range_image_mm(WbDeviceTag tag) {
     height_pixels = frame.getHeight();
     width_pixels = frame.getWidth();
 
+    if (width_pixels>160){
     //Fix blind column
-    for(i=0;i<height_pixels;i++){
-         pDepth[i*width_pixels + 0] = pDepth[i*width_pixels + 3]; 
-         pDepth[i*width_pixels + 1] = pDepth[i*width_pixels + 3];  
-         pDepth[i*width_pixels + 2] = pDepth[i*width_pixels + 3];  
+    	for(i=0;i<height_pixels;i++){
+          pDepth[i*width_pixels + 0] = pDepth[i*width_pixels + 3]; 
+          pDepth[i*width_pixels + 1] = pDepth[i*width_pixels + 3];  
+          pDepth[i*width_pixels + 2] = pDepth[i*width_pixels + 3];  
+    	}
+    } else {
+        for(i=0;i<height_pixels;i++){
+          pDepth[i*width_pixels + 0] = pDepth[i*width_pixels + 1];
+        }
     }
 
     return pDepth;
