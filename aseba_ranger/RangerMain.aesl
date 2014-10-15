@@ -16,6 +16,7 @@
 <event size="10" name="customEvent"/>
 <event size="7" name="emitterEvent"/>
 <event size="1" name="enableFeedback"/>
+<event size="1" name="test"/>
 
 
 <!--list of constants-->
@@ -24,32 +25,6 @@
 
 <!--show keywords state-->
 <keywords flag="true"/>
-
-
-<!--node rab2-->
-<node nodeId="7" name="rab2">var rabFeedbackEnable = 0
-var c
-rf.swarm_size = 25
-rf.slot_time = 4000
-rx.power.en = 1
-tx.power.en = 1
-call rf.start()
-
-
-onevent packet.rx
-if rabFeedbackEnable != 0 then
-	emit receiverFeedback[rx.source, rx.angle, rx.dist, rx.data]
-end
-
-
-onevent emitterEvent
-for c in 0:6 do
-	rf.tx_data[c] = event.args[c]
-end
-
-onevent enableFeedback
-rabFeedbackEnable = event.args[0]
-</node>
 
 
 <!--node RangerMain-->
@@ -65,6 +40,7 @@ var TouchLeft
 var TouchRear
 var Bumper = 0
 var mainFeedbackEnable = 0
+var emergencyBrake = 0
 
 mot1.pid.current_max = 700
 mot2.pid.current_max = 700
@@ -136,6 +112,19 @@ end
 #	call led.vid.stop()
 #end
 
+onevent bumper
+emit test bumper
+if bumper == 1 then
+	mot1.pid.target_speed = 0
+	mot1.pid.enable = 1
+	mot1.pid.target_current = 0
+	mot2.pid.target_speed = 0
+	mot2.pid.enable = 1
+	mot2.pid.target_current = 0
+	emergencyBrake = 1
+else
+	emergencyBrake = 0
+end
 
 onevent setSpeed
 if event.args[0] == 0 and event.args[1] == 0 then
@@ -145,7 +134,7 @@ if event.args[0] == 0 and event.args[1] == 0 then
 	mot2.pid.target_speed = 0
 	mot2.pid.enable = 1
 	mot2.pid.target_current = 0
-else
+elseif emergencyBrake == 0 then
 	mot1.pid.enable = 2
 	mot1.pid.target_speed = event.args[0]
 	mot2.pid.enable = 2
@@ -177,6 +166,32 @@ onevent enableFeedback
 mainFeedbackEnable = event.args[0]
 
 
+</node>
+
+
+<!--node rab2-->
+<node nodeId="7" name="rab2">var rabFeedbackEnable = 0
+var c
+rf.swarm_size = 25
+rf.slot_time = 4000
+rx.power.en = 1
+tx.power.en = 1
+call rf.start()
+
+
+onevent packet.rx
+if rabFeedbackEnable != 0 then
+	emit receiverFeedback[rx.source, rx.angle, rx.dist, rx.data]
+end
+
+
+onevent emitterEvent
+for c in 0:6 do
+	rf.tx_data[c] = event.args[c]
+end
+
+onevent enableFeedback
+rabFeedbackEnable = event.args[0]
 </node>
 
 
