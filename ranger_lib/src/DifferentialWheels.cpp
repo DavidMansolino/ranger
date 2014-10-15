@@ -237,7 +237,7 @@ void webots::DifferentialWheels::connectToDashel() {
 }
 
 void webots::DifferentialWheels::setSpeed(double left, double right) {
-  if((mTargetSpeed[1] != left) || (mTargetSpeed[0] != right)) {
+  // if((mTargetSpeed[1] != left) || (mTargetSpeed[0] != right)) {
     mTargetSpeed[0] = right;
     mTargetSpeed[1] = left;
     if(right < -100)
@@ -250,7 +250,7 @@ void webots::DifferentialWheels::setSpeed(double left, double right) {
       left = 100;
     const int args[2] = {(int)right, (int)-left};
     dashelInterface->sendEvent("setSpeed", args, 2);
-  }
+  // }
 }
 
 void webots::DifferentialWheels::initRanger() {
