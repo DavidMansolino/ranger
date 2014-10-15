@@ -255,7 +255,7 @@ for i in 0:1 do
 	call eye.cartesian_set(i, event.args[2*i], event.args[2*i+1])
 end
 for i in 0:3 do
-	call eyelid.set(i, event.args[i+3])
+	call eyelid.set(i, event.args[i+4])
 end
 </node>
 
