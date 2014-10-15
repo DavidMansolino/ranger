@@ -31,14 +31,14 @@
 var i
 var j
 var timer = 0
-var encoderEnabled = 0
+var encoderEnabled = 1 # set from 0 to 1
 var playingVid = 0
 var repeatVid = 0
 var TouchRight
 var TouchLeft
 var TouchRear
 var Bumper = 0
-var mainFeedbackEnable = 0
+var mainFeedbackEnable = 1 # set from 0 to 1
 var emergencyBrake = 0
 
 mot1.pid.current_max = 700
