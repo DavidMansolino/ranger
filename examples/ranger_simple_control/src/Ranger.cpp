@@ -74,7 +74,7 @@ void Ranger::run() {
     if(DSValue > 1500)
       setSpeed(0, 0);
     else
-      setSpeed(30, 30);
+      setSpeed(30*DSValue*0.001, 30*DSValue*0.001);
     myStep();
   }
 }
